@@ -41,5 +41,10 @@ def get_users(name: str=None,price:int=0):
     }
 
 
+#Send data to user (POST Method)
+
+    
+
+
     
     
