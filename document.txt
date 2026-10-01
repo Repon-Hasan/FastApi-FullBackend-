@@ -1,1 +1,3 @@
 https://github.com/prisma-korea/prisma-fastapi
+
+Path + Query + Body + Combo
