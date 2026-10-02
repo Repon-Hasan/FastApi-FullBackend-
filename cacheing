@@ -1,0 +1,48 @@
+from fastapi import FastAPI
+import requests
+from bs4 import BeautifulSoup
+import time
+
+app = FastAPI()
+
+cache = {
+    "data": None,
+    "time": 0
+}
+
+
+@app.get("/news")
+def get_news(page: int = 1, limit: int = 2):
+
+    current_time = time.time()
+
+    # Check cache
+    if cache["data"] is not None and current_time - cache["time"] < 60:
+        title = cache["data"]
+
+    else:
+        # Fetch fresh data
+        url = "https://indianexpress.com/"
+
+        response = requests.get(url)
+
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        title = []
+
+        for item in soup.find_all("a", class_="topblockNews__sidebarLink"):
+            title.append(item.text.strip())
+
+        # Save data in cache
+        cache["data"] = title
+        cache["time"] = current_time
+
+    # Pagination
+    start = (page - 1) * limit
+    end = start + limit
+
+    return {
+        "page": page,
+        "limit": limit,
+        "news": title[start:end]
+    }
