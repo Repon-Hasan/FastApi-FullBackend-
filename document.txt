@@ -2,3 +2,11 @@ https://github.com/prisma-korea/prisma-fastapi
 https://github.com/mohitdjcet/fastAPI-Tutorial
 
 Path + Query + Body + Combo
+
+
+Run a full FastAPI Project
+deactivate  
+python -m venv venv  
+venv\Scripts\activate     
+python -m pip install fastapi uvicorn 
+python -m uvicorn main:app --reload   
